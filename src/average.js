@@ -11,6 +11,18 @@
     - average([1, '2']) // Retorno: undefined;
 */
 
-const average = () => {};
-// comentário para abrir o pr
+const average = (entry) => {
+  let sum = 0;
+  if (entry.length === 0) {
+    return undefined;
+  }
+    for (let index = 0; index < entry.length; index += 1) {
+    if (typeof entry[index] === 'number') {
+      sum += entry[index];
+    } else { return undefined; }
+  }
+  const result = parseInt((sum / entry.length).toFixed(0), 10);
+  return result;
+};
+
 module.exports = average;
