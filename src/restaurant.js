@@ -41,13 +41,40 @@
 // 4: Crie uma função `createMenu()` que, recebendo um objeto como parâmetro, retorna esse objeto no seguinte formato: 
 //  { fetchMenu: () => objetoPassadoPorParametro }.
 
-const createMenu = (food, drink) => {};
-// {
-//   fetchMenu: () => (
-//   food,
-//   drink,)
-// }
-   
+const restaurantCloned = {};
+const createMenu = (food) => (
+{
+  fetchMenu: () => (food),
+  comsumption: [],
+  order: (pedido) => {
+    const orderList = pedido;
+    const foodList = food.food;
+    const drinkList = food.drink;
+    if (Object.keys(restaurantCloned).length === 0) {
+      Object.assign(restaurantCloned, createMenu(food));
+    }
+    if ((Object.keys(foodList).includes(pedido) || (Object.keys(drinkList).includes(pedido)))) {
+      restaurantCloned.comsumption.push(pedido);
+      return restaurantCloned.comsumption;
+    } return 'Item indisponível';
+  },
+  pay: () => {
+    let bill = 0;
+    const foodList = food.food;
+    const drinkList = food.drink;
+    for (let index = 0; index < restaurantCloned.comsumption.length; index += 1) {
+      if (Object.keys(foodList).includes(restaurantCloned.comsumption[index])) {
+        let item = restaurantCloned.comsumption[index];
+        bill += parseFloat(foodList[item]);
+      } else if (Object.keys(drinkList).includes(restaurantCloned.comsumption[index])) {
+        let item = restaurantCloned.comsumption[index];
+        bill += parseFloat(drinkList[item]);
+      }
+    } return parseFloat((bill * 1.1), 2);
+  },
+}
+);
+
 // Faça o item 5 no arquivo tests/restaurant.spec.js
 
 // 6: Adicione ao objeto retornado por `createMenu()` uma chave de nome `consumption` que, como valor inicial, tem um array vazio.
